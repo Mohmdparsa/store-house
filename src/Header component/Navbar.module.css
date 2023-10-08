@@ -1,0 +1,13 @@
+.navbarContainer {
+    width: 100%;
+    height: 80px;
+    box-shadow: 0 6px 6px #512b81;
+    display: flex;
+    position: relative;
+    border-radius: 6px;
+    background-color: #35155d;
+  }
+  .title {
+    margin-left: 20px;
+    color: #8cabff;
+  }

@@ -1,0 +1,24 @@
+.searchDiv {
+    margin-top: 20px;
+    margin-left: 350px;
+    display: flex;
+  }
+  .searchInput {
+    height: 30px;
+    border-radius: 0 7px 7px 0;
+    border: none;
+    box-shadow: 0 0 6px #8cabff;
+    width: 250px;
+  }
+  .searchInput::placeholder {
+    padding-left: 10px;
+    color: #35155d;
+  }
+  .searchIcon {
+    background-color: #8cabff;
+    padding: 8px;
+    border-radius: 7px 0 0 7px;
+    border: none;
+    box-shadow: 0 0 6px #8cabff;
+    color: #512b81;
+  }

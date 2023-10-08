@@ -1,0 +1,20 @@
+.addItems {
+    width: 150px;
+    height: 40px;
+    background-color: #4477ce;
+    margin-left: 200px;
+    border-radius: 7px;
+    margin-top: 10px;
+    padding-top: 20px;
+    padding-left: 10px;
+    color: #35155d;
+  }
+  .addItemsBtn {
+    border-radius: 4px;
+    border: none;
+    margin-left: 13px;
+  }
+  .addItemsBtn:hover {
+    background-color: #512b81;
+    color: #8cabff;
+  }

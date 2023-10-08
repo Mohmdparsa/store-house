@@ -1,4 +1,4 @@
-import Navbar from "./Header component/Navbar";
+import {Navbar} from "./index.jsx"
 const App = () =>{
   return (
    <div className="App">

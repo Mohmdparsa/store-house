@@ -1,0 +1,60 @@
+.itemsBox {
+    width: 450px;
+    height: 250px;
+    box-shadow: 0 0 5px gray;
+    display: flex;
+    margin-top: 50px;
+    margin-left: 20px;
+    border-radius: 6px;
+    background-color: #8cabff;
+  }
+  .imageDiv {
+    width: 150px;
+    height: 150px;
+    background-color: gray;
+    margin-top: 40px;
+    margin-left: 10px;
+    border-radius: 6px;
+  }
+  .itemsName,
+  .itemsId {
+    margin-top: 50px;
+    margin-left: 20px;
+  }
+  
+  .itemsButton {
+    margin-top: 40px;
+    margin-left: 160px;
+    perspective: 1000px;
+  }
+  .editButton {
+    width: 40px;
+    height: 36px;
+    background-color: rgb(37, 250, 37);
+    border: none;
+    border-radius: 5px;
+  }
+  .eyeButton {
+    width: 40px;
+    height: 36px;
+    background-color: rgb(255, 255, 0);
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .trashButton {
+    width: 40px;
+    height: 36px;
+    background-color: rgb(247, 73, 73);
+    border: none;
+    border-radius: 5px;
+  }
+  .editButton:hover,
+  .trashButton:hover,
+  .eyeButton:hover {
+    width: 44px;
+    height: 44px;
+  }
+  .btnDiv {
+    margin-top: 10px;
+  }

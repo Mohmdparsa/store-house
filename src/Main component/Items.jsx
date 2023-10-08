@@ -1,6 +1,9 @@
+import ItemsBox from "./ItemsBox";
 const Items = () => {
   return(
     <>
+     <ItemsBox/>
+   
     
     </>
   );

@@ -1,8 +1,14 @@
 import ItemsBox from "./ItemsBox";
-const Items = () => {
+import NoItems from "./NoItems";
+const Items = (Items) => {
   return(
     <>
-     <ItemsBox/>
+    {
+      Items.length>0 ? Items.map(i =>(
+        <ItemsBox key={i.id} Items={i}/>
+      )): <NoItems/>
+    }
+     
    
     
     </>

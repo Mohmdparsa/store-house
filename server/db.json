@@ -1,18 +1,40 @@
 {
-    "items" : [],
-    "groups" : [
-        {
-            "id" : "1",
-            "name" : "TV"
-        },{
-            "id" : "2",
-            "name" : "fridge"
-        },{
-            "id" : "3",
-            "name" : "phone"
-        },{
-            "id" : "4",
-            "name" : "laptop"
-        }
-    ]
+  "items": [
+    {
+      "fullname": "Soniya",
+      "photo": "",
+      "model": "S-50DU8620",
+      "desc": "smart with Ultra HD resolution",
+      "cost": "312$",
+      "group": 1,
+      "id": 1
+    },
+    {
+      "fullname": "iphone",
+      "photo": "",
+      "model": "15",
+      "desc": "The iphone 15 display has rounded corners that fallow a beautiful curved design , and these corner are within a standard rectangle",
+      "cost": "899$",
+      "group": 3,
+      "id": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "1",
+      "name": "TV"
+    },
+    {
+      "id": "2",
+      "name": "fridge"
+    },
+    {
+      "id": "3",
+      "name": "phone"
+    },
+    {
+      "id": "4",
+      "name": "laptop"
+    }
+  ]
 }

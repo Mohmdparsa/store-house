@@ -1,0 +1,16 @@
+.NoItemsContainer {
+    width: 600px;
+    height: 220px;
+    border: 2px solid #512b81;
+    margin-left: 350px;
+    margin-top: 120px;
+    line-height: 150px;
+    background-color:#8cabff;
+    border-radius: 6px;
+  }
+  .NoItemsSentence{
+    margin-left: 160px;
+    font-size: 40px;
+    font-weight: bold;
+    color:#512b81;
+  }

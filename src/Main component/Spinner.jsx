@@ -6,8 +6,8 @@ const Spinner = () => {
         src={SpinnerGif}
         style={{
           borderRadius: "7px",
-          marginLeft: "430px",
-          marginTop: "150px ",
+          marginLeft: "640px",
+          marginTop: "180px ",
         }}
         alt="spinner"
       />

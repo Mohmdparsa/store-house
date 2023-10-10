@@ -1,16 +1,24 @@
 import ItemsBox from "./ItemsBox";
 import NoItems from "./NoItems";
-const Items = (Items) => {
-  return(
+import Spinner from "./Spinner";
+const Items = ({getItems, loading}) => {
+  
+  return (
     <>
-    {
-      Items.length>0 ? Items.map(i =>(
-        <ItemsBox key={i.id} Items={i}/>
-      )): <NoItems/>
-    }
-     
-   
-    
+    {console.log(loading)}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <section>
+          {getItems.length > 0 ? (
+            getItems.map((i) => <ItemsBox key={i.id} ItemsBox={i} />)
+          ) : (
+            <NoItems />
+            
+          )}
+        </section>
+      )}
+    {console.log("end")}
     </>
   );
 };

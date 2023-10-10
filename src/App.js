@@ -1,11 +1,12 @@
 import {Navbar , Items} from "./index.jsx"
 import { useState } from "react";
 const App = () =>{
-  const [getItems , setItems] = useState([])
+    const [getItems , setItems] = useState([])
+    const [loading , setLoading] = useState(true)
   return (
    <div className="App">
     <Navbar/>
-    <Items items={getItems}/>
+    <Items getItems={getItems} loading={loading}/>
 
 
   </div>

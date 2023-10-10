@@ -1,11 +1,9 @@
 import ItemsBox from "./ItemsBox";
 import NoItems from "./NoItems";
 import Spinner from "./Spinner";
-const Items = ({getItems, loading}) => {
-  
+const Items = ({ getItems, loading }) => {
   return (
     <>
-    {console.log(loading)}
       {loading ? (
         <Spinner />
       ) : (
@@ -14,11 +12,9 @@ const Items = ({getItems, loading}) => {
             getItems.map((i) => <ItemsBox key={i.id} ItemsBox={i} />)
           ) : (
             <NoItems />
-            
           )}
         </section>
       )}
-    {console.log("end")}
     </>
   );
 };

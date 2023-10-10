@@ -1,5 +1,5 @@
 import styles from "./ItemsBox.module.css"
-const ItemsBox = () => {
+const ItemsBox = ({ItemsBox}) => {
     return (
       <>
         <div className={styles.itemsBox}>
@@ -9,8 +9,14 @@ const ItemsBox = () => {
             <div className={styles.itemsName}>
               <tr>{ItemsBox.fullname}</tr>
             </div>
+            <div className={styles.itemsModel}>
+              <tr>{ItemsBox.model}</tr>
+            </div>
             <div className={styles.itemsId}>
-              <tr>d:</tr>
+              <tr>{ItemsBox.desc}</tr>
+            </div>
+            <div className={styles.itemsCost}>
+              <tr>{ItemsBox.cost}</tr>
             </div>
           </td>
           <td className={styles.itemsButton}>

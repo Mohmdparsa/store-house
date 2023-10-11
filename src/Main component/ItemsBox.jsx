@@ -2,6 +2,7 @@ import styles from "./ItemsBox.module.css"
 const ItemsBox = ({ItemsBox}) => {
     return (
       <>
+      <div className={styles.itemsBoxContainer}>
         <div className={styles.itemsBox}>
           
             <img className={styles.imageDiv} src={ItemsBox.photo} alt={ItemsBox.fullname} />
@@ -12,7 +13,7 @@ const ItemsBox = ({ItemsBox}) => {
             <div className={styles.itemsModel}>
               <tr>{ItemsBox.model}</tr>
             </div>
-            <div className={styles.itemsId}>
+            <div className={styles.itemsDesc}>
               <tr>{ItemsBox.desc}</tr>
             </div>
             <div className={styles.itemsCost}>
@@ -44,6 +45,7 @@ const ItemsBox = ({ItemsBox}) => {
               </tr>
             </div>
           </td>
+        </div>
         </div>
       </>
     );

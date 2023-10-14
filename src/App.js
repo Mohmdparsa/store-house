@@ -1,6 +1,6 @@
 import { Navbar, Items } from "./index.jsx";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import {getAllItems , getAllGroups} from "./Services/ItemsServices.js"
 const App = () => {
   const [getItems, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -9,8 +9,8 @@ const App = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const {data : itemsData} = await axios.get("http://localhost:9000/items");
-        const {data : groupsData} = await axios.get("http://localhost:9000/groups")
+        const {data : itemsData} = await getAllItems()
+        const {data : groupsData} = await getAllGroups()
         setItems(itemsData)
         setGroups(groupsData)
         setLoading(false)

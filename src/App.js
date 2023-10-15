@@ -1,6 +1,8 @@
 import { Navbar, Items } from "./index.jsx";
 import { useState, useEffect } from "react";
-import {getAllItems , getAllGroups} from "./Services/ItemsServices.js"
+import { getAllItems, getAllGroups } from "./Services/ItemsServices.js";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
+import AddItems from "./Header component/AddItems.jsx";
 const App = () => {
   const [getItems, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -9,22 +11,31 @@ const App = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const {data : itemsData} = await getAllItems()
-        const {data : groupsData} = await getAllGroups()
-        setItems(itemsData)
-        setGroups(groupsData)
-        setLoading(false)
-      } catch(error){
-        console.log(error.message)
-        setLoading(false)
+        const { data: itemsData } = await getAllItems();
+        const { data: groupsData } = await getAllGroups();
+        setItems(itemsData);
+        setGroups(groupsData);
+        setLoading(false);
+      } catch (error) {
+        console.log(error.message);
+        setLoading(false);
       }
     };
-    fetchData()
-  } ,[]);
+    fetchData();
+  }, []);
   return (
     <div className="App">
       <Navbar />
-      <Items getItems={getItems} loading={loading} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/Items" />} />
+          <Route
+            path="/Items"
+            element={<Items getItems={getItems} loading={loading} />}
+          />
+          <Route path="/Items/add" element={<AddItems/>}/>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 };

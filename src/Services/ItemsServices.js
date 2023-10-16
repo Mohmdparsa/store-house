@@ -26,3 +26,25 @@ export const getGroupId = (groupsId)=>{
     const url = `${ServerURL}/groups/${groupsId}`
     return axios.get(url)
 }
+//@desc create new items
+//@route Post  http://localhost:9000/items
+export const createItems = (items)=>{
+  const url = `${ServerURL}/items`
+  return axios.post(url , items)
+}
+//@desc edit items
+//@route edit http://localhost:9000/items/:itemsId
+export const updateItems = (items,itemsId)=>{
+  const url = `${ServerURL}/items/${itemsId}`
+  return axios.put(url , items)
+}
+//@desc delete items
+//@route delete http://localhost:9000/items/:itemsId
+export const deleteItems = (itemsId)=>{
+  const url = `${ServerURL}/items/${itemsId}`
+  return axios.delete(url)
+}
+   
+
+
+

@@ -1,12 +1,26 @@
 import { Navbar, Items } from "./index.jsx";
 import { useState, useEffect } from "react";
-import { getAllItems, getAllGroups } from "./Services/ItemsServices.js";
-import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
+import {
+  getAllItems,
+  getAllGroups,
+  createItems,
+} from "./Services/ItemsServices.js";
+import {
+  BrowserRouter,
+  Navigate,
+  Routes,
+  Route,
+  useNavigate,
+  Router
+} from "react-router-dom";
 import AddItems from "./Header component/AddItems.jsx";
+import AddItem from "./Header component/AddItem.jsx";
 const App = () => {
+  // @desc ( Items.jsx & ItemsBox.jsx ) for get data with axios from API
   const [getItems, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [getGroups, setGroups] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,19 +37,57 @@ const App = () => {
     };
     fetchData();
   }, []);
+ 
+  //@desc for make new items in AddItem.jsx
+  const [newItems, setNewItems] = useState({
+    fullname: "",
+    photo: "",
+    model: "",
+    desc: "",
+    cost: "",
+    group: "",
+  });
+  const setItemsInfo = (event) => {
+    setNewItems({ ...newItems, [event.target.name]: event.target.value });
+  };
+
+ const navigate = useNavigate();
+  const createItemsForm = async (event) => {
+    event.preventDefault();
+    try {
+      const { status } = await createItems(getItems);
+      if (status === 201) {
+        setItems({});
+        navigate("/items");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className="App">
-      <Navbar />
-      <BrowserRouter>
+      
+        <Navbar />
         <Routes>
           <Route path="/" element={<Navigate to="/Items" />} />
           <Route
             path="/Items"
             element={<Items getItems={getItems} loading={loading} />}
           />
-          <Route path="/Items/add" element={<AddItems/>}/>
+          <Route path="/Items/add" element={<AddItems />} />
+          <Route
+            path="/AddItem"
+            loading={loading}
+            setItemsInfo={setItemsInfo}
+            newItems={newItems}
+            getGroups={getGroups}
+            createItemsForm={createItemsForm}
+            element={<AddItem />}
+          />
         </Routes>
-      </BrowserRouter>
+        
+      
     </div>
   );
 };

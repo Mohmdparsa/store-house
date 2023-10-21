@@ -1,0 +1,46 @@
+.AddItemContainer {
+  width: 650px;
+  height: 595px;
+  background-color: #512b81;
+  border-radius: 10px;
+  margin-top: 40px;
+  margin-left: 320px;
+}
+.AddItemInputs {
+  width: 400px;
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-left: 125px;
+}
+.AddItemName {
+  margin-top: 50px;
+}
+.AddItemDesc {
+  border-radius: 4px;
+  width: 400px;
+  height: 100px;
+  margin-top: 10px;
+  margin-left: 125px;
+}
+.AddItemSubmit {
+  height: 45px;
+  width: 120px;
+  border-radius: 7px;
+  margin-left: 125px;
+  margin-top: 45px;
+}
+.AddItemSubmit:hover {
+  background-color: yellow;
+}
+
+.AddItemCancelBtn {
+  height: 45px;
+  width: 120px;
+  border-radius: 7px;
+  margin-left: 160px;
+  margin-top: 45px;
+}
+.AddItemCancelBtn:hover {
+  background-color: rgb(255, 80, 49);
+}

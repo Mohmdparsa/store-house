@@ -8,7 +8,7 @@ const Navbar = () => {
           <h1 className={Styles.title}>StoreHouse</h1>
           <SearchItems/>
           <AddItems/>
-        
+   
         </div>
       </>
     );

@@ -1,0 +1,50 @@
+.ViewItemsContainer {
+  width: 90%;
+  height: 300px;
+  background-color: #8cabff;
+  border-radius: 10px 10px 0 0;
+  margin-top: 100px;
+  margin-left: 70px;
+  display: flex;
+  position: relative;
+}
+.ViewItemsImg {
+  width: 250px;
+  height: 250px;
+  background-color: black;
+  border-radius: 10px;
+  margin-top: 25px;
+  margin-left: 20px;
+}
+.ViewItemsLine {
+  width: 2px;
+  height: 240px;
+  background-color: gray;
+  margin-top: 30px;
+  margin-left: 23px;
+}
+.ViewItemsName {
+  margin-top: 50px;
+}
+
+.ViewItemsDiv {
+  width: 700px;
+  height: 300px;
+}
+
+.ViewItemsTotal {
+  margin-left: 20px;
+  margin-top: 40px;
+}
+.ViewItemsBackBtn {
+  height: 60px;
+  width: 90%;
+  margin-left: 70px;
+  border-radius: 0 0 10px 10px;
+  border: none;
+  color: black;
+  background-image: linear-gradient(#8cabff, #512b81);
+
+}
+
+

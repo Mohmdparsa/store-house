@@ -1,4 +1,7 @@
 import styles from "./ItemsBox.module.css"
+import { Link } from "react-router-dom";
+import ViewItems from "./ViewItems";
+import Items from "./Items";
 const ItemsBox = ({ItemsBox}) => {
     return (
       <>
@@ -31,9 +34,11 @@ const ItemsBox = ({ItemsBox}) => {
   
             <div className={styles.btnDiv}>
               <tr>
+                <Link to={`/Items/${ItemsBox.id}`}>
                 <button className={styles.eyeButton}>
                   <li className="fa fa-eye "></li>
                 </button>
+                </Link>
               </tr>
             </div>
   

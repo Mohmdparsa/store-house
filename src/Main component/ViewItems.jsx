@@ -1,9 +1,9 @@
 import Styles from "./ViewItems.module.css";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getItemsId, getGroupId } from "../Services/ItemsServices";
-import Spinner  from "./Spinner";
-console.log("top")
+import { getItemsId, getGroupsId } from "../Services/ItemsServices";
+import Spinner from "./Spinner";
+console.log("top");
 
 const ViewItems = () => {
   const { itemsId } = useParams();
@@ -12,37 +12,35 @@ const ViewItems = () => {
     items: {},
     groups: {},
   });
- 
-//   console.log(loading)
 
-  console.log('topOfTheUseEffect')
+  console.log("topOfTheUseEffect");
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("setState")
-        setState({ ...state, loading: true });
-        const { data: itemData } = await getItemsId(itemsId);
-        console.log("this is itemData", itemData)
-        const { data: groupData } = await getGroupId(itemData.groups);
+        console.log("setState");
+        setState((state) => ({ ...state, loading: true }));
+        const itemData = await getItemsId(itemsId);
+        // const { data: groupData } = await getGroupId(itemData.groups);
+        console.log("this is itemsData", itemData);
         setState({
           ...state,
-          loading: false,
-          items: itemData,
-          groups: groupData,
+          ...{ loading: false, items: itemData, groups: "groupData" },
         });
       } catch (error) {
         console.log(error.message);
-        setState({ ...state, loading: false });
+        setState((state) => ({ ...state, loading: false }));
       }
     };
+    console.log("this should be itemData", state);
+
     fetchData();
   }, []);
 
   // here i had an error of state is not iterable because of [] instead of {}
   // i solved this problem dont worry just i want to write this note
-  const {loading , items , groups} = state
-  console.log("im here")
-  console.log("this is items", items) 
+  const { loading, items } = state;
+  console.log("im here");
+  console.log("this is items", items);
 
   return (
     <>
@@ -50,11 +48,9 @@ const ViewItems = () => {
         <Spinner />
       ) : (
         <>
-        {/* to do : Object.keys() is not supportedin internet Explorer here we had 404 error 
-        We make some change in ItemsServices so we solve the error but our project dont run*/}
           {Object.keys(items).length > 0 && (
             <section>
-              {console.log('section')}
+              {console.log("section")}
               <div className={Styles.ViewItemsContainer}>
                 <img src="" alt="" className={Styles.ViewItemsImg} />
                 <span className={Styles.ViewItemsLine}></span>
@@ -62,19 +58,22 @@ const ViewItems = () => {
                   <p
                     className={`${Styles.ViewItemsTotal} , ${Styles.ViewItemsName}`}
                   >
-                    <b>Name:{items.name}</b>
+                    <span className={Styles.ViewItemsHeadLine}>Name: </span>
+                    {items.fullname}
                   </p>
                   <p className={`${Styles.ViewItemsTotal}`}>
-                    <b>Model:{items.model}</b>
+                    <span className={Styles.ViewItemsHeadLine}>Model: </span>
+                    {items.model}
                   </p>
                   <p className={`${Styles.ViewItemsTotal}`}>
-                    <b>description:{items.desc}</b>
+                    <span className={Styles.ViewItemsHeadLine}>
+                      description:{" "}
+                    </span>
+                    {items.desc}
                   </p>
                   <p className={`${Styles.ViewItemsTotal}`}>
-                    <b>cost:{items.cost}</b>
-                  </p>
-                  <p className={`${Styles.ViewItemsTotal}`}>
-                    <b>Group:{groups}</b>
+                    <span className={Styles.ViewItemsHeadLine}>cost: </span>
+                    {items.cost}
                   </p>
                 </div>
               </div>
@@ -89,6 +88,6 @@ const ViewItems = () => {
     </>
   );
 };
-console.log("end")
+console.log("end");
 
 export default ViewItems;

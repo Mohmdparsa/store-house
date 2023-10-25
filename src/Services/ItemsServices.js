@@ -11,13 +11,9 @@ export const getAllItems = () => {
 //@desc Get items with items Id
 //@route Get http://localhost:9000/items/:itemsId
  export const getItemsId = async (itemsId) => {
-  console.log("THIS IS ITEM id", itemsId)
   const url = `${ServerURL}/items`;
   const items = (await axios.get(url)).data;
-  console.log("hell is this", items)
-  const finaleItem = (items).filter((i) => i.id === itemsId)
-  console.log("this is hell", finaleItem)
-  return finaleItem()
+  return items.find(i => i.id === Number(itemsId))
 };
 
 
@@ -40,16 +36,6 @@ export const getGroupId = (groupsId)=>{
     const url = `${ServerURL}/groups/${groupsId}`
     return axios.get(url)
 }
-
-// export const getGroupId = async (groupsId) => {
-//   console.log("here groupsId", groupsId)
-//   const url = `${ServerURL}/items`;
-//   const items = (await axios.get(url)).data;
-//   console.log("hell is this", items)
-//   const finaleItem = (items).filter((i) => i.id === groupsId)
-//   console.log("this is hell", finaleItem)
-//   return finaleItem()
-// };
 
 //@desc create new items
 //@route Post  http://localhost:9000/items

@@ -1,4 +1,4 @@
-import { Navbar, Items , AddItems , AddItem } from "./index.jsx";
+import { Navbar, Items , AddItems , AddItem , ViewItems} from "./index.jsx";
 import { useState, useEffect } from "react";
 import {
   getAllItems,
@@ -75,6 +75,7 @@ const App = () => {
           createItemsForm={createItemsForm}
           element={<AddItem />}
         />
+        <Route path="/Items/:itemsId" element={<ViewItems/>} />
       </Routes>
     </div>
   );

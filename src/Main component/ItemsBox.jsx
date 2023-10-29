@@ -1,14 +1,15 @@
-import styles from "./ItemsBox.module.css"
+import styles from "./ItemsBox.module.css";
 import { Link } from "react-router-dom";
-import ViewItems from "./ViewItems";
-import Items from "./Items";
-const ItemsBox = ({ItemsBox}) => {
-    return (
-      <>
+const ItemsBox = ({ ItemsBox }) => {
+  return (
+    <>
       <div className={styles.itemsBoxContainer}>
         <div className={styles.itemsBox}>
-          
-            <img className={styles.imageDiv} src={ItemsBox.photo} alt={ItemsBox.fullname} />
+          <img
+            className={styles.imageDiv}
+            src={ItemsBox.photo}
+            alt={ItemsBox.fullname}
+          />
           <td>
             <div className={styles.itemsName}>
               <tr>{ItemsBox.fullname}</tr>
@@ -26,22 +27,26 @@ const ItemsBox = ({ItemsBox}) => {
           <td className={styles.itemsButton}>
             <div className={styles.btnDiv}>
               <tr>
-                <button className={styles.editButton}>
-                  <li className="fa fa-edit "></li>
-                </button>
-              </tr>
-            </div>
-  
-            <div className={styles.btnDiv}>
-              <tr>
-                <Link to={`/Items/${ItemsBox.id}`}>
-                <button className={styles.eyeButton}>
-                  <li className="fa fa-eye "></li>
-                </button>
+                <Link to={`/Items/edit/${ItemsBox.id}`}>
+                  <button className={styles.editButton}>
+                    <li className="fa fa-edit "></li>
+                    {console.log("EditItems")}
+                  </button>
                 </Link>
               </tr>
             </div>
-  
+
+            <div className={styles.btnDiv}>
+              <tr>
+                <Link to={`/Items/${ItemsBox.id}`}>
+                  <button className={styles.eyeButton}>
+                    <li className="fa fa-eye "></li>
+                  </button>
+                  {console.log("ViewItems")}
+                </Link>
+              </tr>
+            </div>
+
             <div className={styles.btnDiv}>
               <tr>
                 <button className={styles.trashButton}>
@@ -51,9 +56,9 @@ const ItemsBox = ({ItemsBox}) => {
             </div>
           </td>
         </div>
-        </div>
-      </>
-    );
-  };
-  
-  export default ItemsBox;
+      </div>
+    </>
+  );
+};
+
+export default ItemsBox;

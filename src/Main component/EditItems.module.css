@@ -1,0 +1,47 @@
+.EditItemsContainer {
+    width: 650px;
+    height: 595px;
+    background-color: #512b81;
+    border-radius: 10px;
+    margin-top: 40px;
+    margin-left: 320px;
+  }
+  .EditItemsInputs {
+    width: 400px;
+    height: 40px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-left: 125px;
+  }
+  .EditItemsName {
+    margin-top: 50px;
+  }
+  .EditItemsDesc {
+    border-radius: 4px;
+    width: 400px;
+    height: 100px;
+    margin-top: 10px;
+    margin-left: 125px;
+  }
+  .EditItemsSubmit {
+    height: 45px;
+    width: 120px;
+    border-radius: 7px;
+    margin-left: 125px;
+    margin-top: 45px;
+  }
+  .EditItemsSubmit:hover {
+    background-color: yellow;
+  }
+  
+  .EditItemsCancelBtn {
+    height: 45px;
+    width: 120px;
+    border-radius: 7px;
+    margin-left: 160px;
+    margin-top: 45px;
+  }
+  .EditItemsCancelBtn:hover {
+    background-color: rgb(255, 80, 49);
+  }
+  

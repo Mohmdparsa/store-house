@@ -65,6 +65,82 @@ const App = () => {
     }
   };
 
+  //**************** here our code related to confirmAlert & delete button ***************
+
+  const confirm = (ItemsId, Fullname) => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div
+            className="custom-ui"
+            style={{
+              width: "400px",
+              height: "300px",
+              backgroundColor: "#512b81",
+              borderRadius: "10px",
+              color: "#8cabff",
+              textAlign: "center",
+              paddingTop: "15px",
+            }}
+          >
+            <h1>Are you sure?</h1>
+            <p>You want to delete {Fullname}?</p>
+            <button
+              style={{
+                backgroundColor: "#8cabff",
+                width: "120px",
+                height: "60px",
+                color: "black",
+                borderRadius: "10px",
+                border: "none",
+                marginTop: "100px",
+              }}
+              onClick={onClose}
+            >
+              No
+            </button>
+            <button
+              style={{
+                backgroundColor: "#8cabff",
+                width: "120px",
+                height: "60px",
+                color: "black",
+                borderRadius: "10px",
+                border: "none",
+                marginLeft: "100px",
+                marginTop: "100px",
+              }}
+              onClick={() => {
+                removeItems(ItemsId);
+                onClose();
+              }}
+            >
+              Yes, Delete it!
+            </button>
+          </div>
+        );
+      },
+    });
+  };
+
+  const removeItems = async (ItemsId) => {
+    try {
+      setLoading(true);
+      const response = await deleteItems(ItemsId);
+      if (response) {
+        // here after we delete specific item we want other items show except that one so:
+        const { data: getItemsData } = await getAllItems();
+        setItems(getItemsData);
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log(err.message);
+      setLoading(false);
+    }
+  };
+
+  //************************************************
+
   return (
     <div className="App">
       <Navbar />
@@ -72,7 +148,13 @@ const App = () => {
         <Route path="/" element={<Navigate to="/Items" />} />
         <Route
           path="/Items"
-          element={<Items getItems={getItems} loading={loading} />}
+          element={
+            <Items
+              getItems={getItems}
+              loading={loading}
+              confirmDelete={confirm}
+            />
+          }
         />
         <Route path="/Items/add" element={<AddItems />} />
         <Route

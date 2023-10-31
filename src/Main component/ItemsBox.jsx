@@ -1,6 +1,6 @@
 import styles from "./ItemsBox.module.css";
 import { Link } from "react-router-dom";
-const ItemsBox = ({ ItemsBox }) => {
+const ItemsBox = ({ ItemsBox , confirmDelete}) => {
   return (
     <>
       <div className={styles.itemsBoxContainer}>
@@ -49,8 +49,9 @@ const ItemsBox = ({ ItemsBox }) => {
 
             <div className={styles.btnDiv}>
               <tr>
-                <button className={styles.trashButton}>
+                <button onClick={confirmDelete} className={styles.trashButton}>
                   <li className="fa fa-trash "></li>
+                  
                 </button>
               </tr>
             </div>

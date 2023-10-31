@@ -11,8 +11,10 @@ import {
   getAllItems,
   getAllGroups,
   createItems,
+  deleteItems,
 } from "./Services/ItemsServices.js";
 import { Navigate, Routes, Route, useNavigate } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
 const App = () => {
   // @desc ( Items.jsx & ItemsBox.jsx ) for get data with axios from API
   const [getItems, setItems] = useState([]);
@@ -63,6 +65,82 @@ const App = () => {
     }
   };
 
+  //**************** here our code related to confirmAlert & delete button ***************
+
+  const confirm = (ItemsId, Fullname) => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div
+            className="custom-ui"
+            style={{
+              width: "400px",
+              height: "300px",
+              backgroundColor: "#512b81",
+              borderRadius: "10px",
+              color: "#8cabff",
+              textAlign: "center",
+              paddingTop: "15px",
+            }}
+          >
+            <h1>Are you sure?</h1>
+            <p>You want to delete {Fullname}?</p>
+            <button
+              style={{
+                backgroundColor: "#8cabff",
+                width: "120px",
+                height: "60px",
+                color: "black",
+                borderRadius: "10px",
+                border: "none",
+                marginTop: "100px",
+              }}
+              onClick={onClose}
+            >
+              No
+            </button>
+            <button
+              style={{
+                backgroundColor: "#8cabff",
+                width: "120px",
+                height: "60px",
+                color: "black",
+                borderRadius: "10px",
+                border: "none",
+                marginLeft: "100px",
+                marginTop: "100px",
+              }}
+              onClick={() => {
+                removeItems(ItemsId);
+                onClose();
+              }}
+            >
+              Yes, Delete it!
+            </button>
+          </div>
+        );
+      },
+    });
+  };
+
+  const removeItems = async (ItemsId) => {
+    try {
+      setLoading(true);
+      const response = await deleteItems(ItemsId);
+      if (response) {
+        // here after we delete specific item we want other items show except that one so:
+        const { data: getItemsData } = await getAllItems();
+        setItems(getItemsData);
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log(err.message);
+      setLoading(false);
+    }
+  };
+
+  //************************************************
+
   return (
     <div className="App">
       <Navbar />
@@ -70,7 +148,13 @@ const App = () => {
         <Route path="/" element={<Navigate to="/Items" />} />
         <Route
           path="/Items"
-          element={<Items getItems={getItems} loading={loading} />}
+          element={
+            <Items
+              getItems={getItems}
+              loading={loading}
+              confirmDelete={confirm}
+            />
+          }
         />
         <Route path="/Items/add" element={<AddItems />} />
         <Route
@@ -84,7 +168,7 @@ const App = () => {
         />
         {/* here there is a problem , we have two different
          component with same routes but it will show us same output */}
-         {/* solve problem : here we have same routes but we need different output for EditItems
+        {/* solve problem : here we have same routes but we need different output for EditItems
          and ViewItems , so because of that we wrote edit between Items and ItemsId 
          and we did the same in ItemsBox for Link */}
         <Route path="/Items/edit/:itemsId" element={<EditItems />} />

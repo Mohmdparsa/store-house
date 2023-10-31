@@ -13,6 +13,7 @@ import {
   createItems,
 } from "./Services/ItemsServices.js";
 import { Navigate, Routes, Route, useNavigate } from "react-router-dom";
+import {confirmAlert} from "react-confirm-alert"
 const App = () => {
   // @desc ( Items.jsx & ItemsBox.jsx ) for get data with axios from API
   const [getItems, setItems] = useState([]);

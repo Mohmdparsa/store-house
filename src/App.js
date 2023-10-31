@@ -11,9 +11,10 @@ import {
   getAllItems,
   getAllGroups,
   createItems,
+  deleteItems,
 } from "./Services/ItemsServices.js";
 import { Navigate, Routes, Route, useNavigate } from "react-router-dom";
-import {confirmAlert} from "react-confirm-alert"
+import { confirmAlert } from "react-confirm-alert";
 const App = () => {
   // @desc ( Items.jsx & ItemsBox.jsx ) for get data with axios from API
   const [getItems, setItems] = useState([]);
@@ -85,7 +86,7 @@ const App = () => {
         />
         {/* here there is a problem , we have two different
          component with same routes but it will show us same output */}
-         {/* solve problem : here we have same routes but we need different output for EditItems
+        {/* solve problem : here we have same routes but we need different output for EditItems
          and ViewItems , so because of that we wrote edit between Items and ItemsId 
          and we did the same in ItemsBox for Link */}
         <Route path="/Items/edit/:itemsId" element={<EditItems />} />

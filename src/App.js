@@ -20,6 +20,8 @@ const App = () => {
   const [getItems, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [getGroups, setGroups] = useState([]);
+  const [getFilteredItems, setFilteredItems] = useState([]);
+  const [query, setQuery] = useState({ text: "" });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +30,7 @@ const App = () => {
         const { data: itemsData } = await getAllItems();
         const { data: groupsData } = await getAllGroups();
         setItems(itemsData);
+        setFilteredItems(itemsData);
         setGroups(groupsData);
         setLoading(false);
       } catch (error) {
@@ -141,16 +144,32 @@ const App = () => {
 
   //************************************************
 
+  //**************************here our code related to searching input in Navbar******************************
+
+  console.log("searchingItems")
+  const searchingItems = (event) => {
+    setQuery({ ...query , text:event.target.value});
+    const filterItems = getItems.filter((item) => {
+     return item.fullname.toLowerCase().includes(event.target.value.toLowerCase());
+    });
+    setFilteredItems(filterItems);
+  };
+  console.log("setFilterItems")
+
+  //***************************
+
   return (
     <div className="App">
-      <Navbar />
+      <Navbar query={query} search={searchingItems} />
+
       <Routes>
+        
         <Route path="/" element={<Navigate to="/Items" />} />
         <Route
           path="/Items"
           element={
             <Items
-              getItems={getItems}
+              getItems={getFilteredItems}
               loading={loading}
               confirmDelete={confirm}
             />

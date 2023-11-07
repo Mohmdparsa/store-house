@@ -15,13 +15,15 @@ import {
 } from "./Services/ItemsServices.js";
 import { Navigate, Routes, Route, useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
+import { ItemsContext } from "./Context/ItemsContext.js";
 const App = () => {
   // @desc ( Items.jsx & ItemsBox.jsx ) for get data with axios from API
-  const [getItems, setItems] = useState([]);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [getGroups, setGroups] = useState([]);
-  const [getFilteredItems, setFilteredItems] = useState([]);
-  const [query, setQuery] = useState({ text: "" });
+  const [groups, setGroups] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [itemQuery, setItemQuery] = useState({ text: "" });
+  const [item, setItem] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,24 +43,17 @@ const App = () => {
     fetchData();
   }, []);
 
-  //@desc for make new items in AddItem.jsx
-  const [newItems, setNewItems] = useState({
-    fullname: "",
-    photo: "",
-    model: "",
-    desc: "",
-    cost: "",
-    group: "",
-  });
-  const setItemsInfo = (event) => {
-    setNewItems({ ...newItems, [event.target.name]: event.target.value });
+  //**********************@desc for make new items in AddItem.jsx*************************
+
+  const onItemsChange = (event) => {
+    setItem({ ...item, [event.target.name]: event.target.value });
   };
 
   const navigate = useNavigate();
   const createItemsForm = async (event) => {
     event.preventDefault();
     try {
-      const { status } = await createItems(getItems);
+      const { status } = await createItems(items);
       if (status === 201) {
         setItems({});
         navigate("/items");
@@ -70,7 +65,7 @@ const App = () => {
 
   //**************** here our code related to confirmAlert & delete button ***************
 
-  const confirm = (ItemsId, Fullname) => {
+  const confirmDelete = (ItemsId, Fullname) => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
@@ -142,36 +137,33 @@ const App = () => {
     }
   };
 
-  //************************************************
-
   //**************************here our code related to searching input in Navbar******************************
 
-  console.log("searchingItems")
+  console.log("searchingItems");
   const searchingItems = (event) => {
-    setQuery({ ...query , text:event.target.value});
-    const filterItems = getItems.filter((item) => {
-     return item.fullname.toLowerCase().includes(event.target.value.toLowerCase());
+    setItemQuery({ ...itemQuery, text: event.target.value });
+    const filterItems = items.filter((item) => {
+      return item.fullname
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
     });
     setFilteredItems(filterItems);
   };
-  console.log("setFilterItems")
-
-  //***************************
+  console.log("setFilterItems");
 
   return (
     <div className="App">
-      <Navbar query={query} search={searchingItems} />
+      <Navbar query={itemQuery} search={searchingItems} />
 
       <Routes>
-        
         <Route path="/" element={<Navigate to="/Items" />} />
         <Route
           path="/Items"
           element={
             <Items
-              getItems={getFilteredItems}
+              getItems={filteredItems}
               loading={loading}
-              confirmDelete={confirm}
+              confirmDelete={confirmDelete}
             />
           }
         />
@@ -179,9 +171,9 @@ const App = () => {
         <Route
           path="/AddItem"
           loading={loading}
-          setItemsInfo={setItemsInfo}
-          newItems={newItems}
-          getGroups={getGroups}
+          setItemsInfo={onItemsChange}
+          newItems={item}
+          getGroups={groups}
           createItemsForm={createItemsForm}
           element={<AddItem />}
         />

@@ -9,7 +9,7 @@ export const ItemsContext = createContext({
   filteredItems: [],
   itemsQuery: [],
   groups: [],
-  onContactChange: () => {},
+  onItemsChange: () => {},
   deleteItems: () => {},
   updateItems: () => {},
   createItems: () => {},

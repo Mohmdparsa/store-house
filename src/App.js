@@ -22,7 +22,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [groups, setGroups] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
-  const [itemQuery, setItemQuery] = useState({ text: "" });
+  const [itemsQuery, setItemsQuery] = useState({ text: "" });
   const [item, setItem] = useState({});
 
   useEffect(() => {
@@ -141,7 +141,7 @@ const App = () => {
 
   console.log("searchingItems");
   const searchingItems = (event) => {
-    setItemQuery({ ...itemQuery, text: event.target.value });
+    setItemsQuery({ ...itemsQuery, text: event.target.value });
     const filterItems = items.filter((item) => {
       return item.fullname
         .toLowerCase()
@@ -152,40 +152,56 @@ const App = () => {
   console.log("setFilterItems");
 
   return (
-    <div className="App">
-      <Navbar query={itemQuery} search={searchingItems} />
+    <ItemsContext.Provider value={{
+      loading,
+      setLoading,
+      items,
+      setItems,
+      item,
+      itemsQuery ,
+     filteredItems,
+     groups,
+     onItemsChange,
+     deleteItems : confirmDelete, 
+     createItems : createItemsForm,
+     itemsSearch :searchingItems, 
+    }}>
+      {" "}
+      <div className="App">
+        <Navbar query={itemsQuery} search={searchingItems} />
 
-      <Routes>
-        <Route path="/" element={<Navigate to="/Items" />} />
-        <Route
-          path="/Items"
-          element={
-            <Items
-              getItems={filteredItems}
-              loading={loading}
-              confirmDelete={confirmDelete}
-            />
-          }
-        />
-        <Route path="/Items/add" element={<AddItems />} />
-        <Route
-          path="/AddItem"
-          loading={loading}
-          setItemsInfo={onItemsChange}
-          newItems={item}
-          getGroups={groups}
-          createItemsForm={createItemsForm}
-          element={<AddItem />}
-        />
-        {/* here there is a problem , we have two different
+        <Routes>
+          <Route path="/" element={<Navigate to="/Items" />} />
+          <Route
+            path="/Items"
+            element={
+              <Items
+                getItems={filteredItems}
+                loading={loading}
+                confirmDelete={confirmDelete}
+              />
+            }
+          />
+          <Route path="/Items/add" element={<AddItems />} />
+          <Route
+            path="/AddItem"
+            loading={loading}
+            setItemsInfo={onItemsChange}
+            newItems={item}
+            getGroups={groups}
+            createItemsForm={createItemsForm}
+            element={<AddItem />}
+          />
+          {/* here there is a problem , we have two different
          component with same routes but it will show us same output */}
-        {/* solve problem : here we have same routes but we need different output for EditItems
+          {/* solve problem : here we have same routes but we need different output for EditItems
          and ViewItems , so because of that we wrote edit between Items and ItemsId 
          and we did the same in ItemsBox for Link */}
-        <Route path="/Items/edit/:itemsId" element={<EditItems />} />
-        <Route path="/Items/:itemsId" element={<ViewItems />} />
-      </Routes>
-    </div>
+          <Route path="/Items/edit/:itemsId" element={<EditItems />} />
+          <Route path="/Items/:itemsId" element={<ViewItems />} />
+        </Routes>
+      </div>
+    </ItemsContext.Provider>
   );
 };
 

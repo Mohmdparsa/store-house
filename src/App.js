@@ -168,7 +168,7 @@ const App = () => {
     }}>
       {" "}
       <div className="App">
-        <Navbar query={itemsQuery} search={searchingItems} />
+        <Navbar/>
 
         <Routes>
           <Route path="/" element={<Navigate to="/Items" />} />

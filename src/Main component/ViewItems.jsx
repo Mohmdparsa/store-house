@@ -1,44 +1,43 @@
 import Styles from "./ViewItems.module.css";
 import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getItemsId, getGroupsId } from "../Services/ItemsServices";
 import Spinner from "./Spinner";
-console.log("top");
+import { ItemsContext } from "../Context/ItemsContext";
 
 const ViewItems = () => {
   const { itemsId } = useParams();
   const [state, setState] = useState({
-    loading: false,
     items: {},
     groups: {},
   });
+  const { loading ,  setLoading } = useContext(ItemsContext);
 
-  console.log("topOfTheUseEffect");
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("setState");
-        setState((state) => ({ ...state, loading: true }));
+        setLoading(true);
+        setState((state) => ({ ...state }));
         const itemData = await getItemsId(itemsId);
         // const { data: groupData } = await getGroupId(itemData.groups);
-        console.log("this is itemsData", itemData);
         setState({
           ...state,
-          ...{ loading: false, items: itemData, groups: "groupData" },
+          ...{ items: itemData, groups: "groupData" },
         });
+        setLoading(false)
       } catch (error) {
         console.log(error.message);
-        setState((state) => ({ ...state, loading: false }));
+        setState((state) => ({ ...state }));
+        setLoading(false);
       }
     };
-    console.log("this should be itemData", state);
 
     fetchData();
   }, []);
 
   // here i had an error of state is not iterable because of [] instead of {}
   // i solved this problem dont worry just i want to write this note
-  const { loading, items } = state;
+  const { items } = state;
   console.log("im here");
   console.log("this is items", items);
 

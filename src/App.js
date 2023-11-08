@@ -152,36 +152,29 @@ const App = () => {
   console.log("setFilterItems");
 
   return (
-    <ItemsContext.Provider value={{
-      loading,
-      setLoading,
-      items,
-      setItems,
-      item,
-      itemsQuery ,
-     filteredItems,
-     groups,
-     onItemsChange,
-     deleteItems : confirmDelete, 
-     createItems : createItemsForm,
-     itemsSearch :searchingItems, 
-    }}>
+    <ItemsContext.Provider
+      value={{
+        loading,
+        setLoading,
+        items,
+        setItems,
+        item,
+        itemsQuery,
+        filteredItems,
+        groups,
+        onItemsChange,
+        deleteItems: confirmDelete,
+        createItems: createItemsForm,
+        itemsSearch: searchingItems,
+      }}
+    >
       {" "}
       <div className="App">
-        <Navbar/>
+        <Navbar />
 
         <Routes>
           <Route path="/" element={<Navigate to="/Items" />} />
-          <Route
-            path="/Items"
-            element={
-              <Items
-                getItems={filteredItems}
-                loading={loading}
-                confirmDelete={confirmDelete}
-              />
-            }
-          />
+          <Route path="/Items" element={<Items />} />
           <Route path="/Items/add" element={<AddItems />} />
           <Route
             path="/AddItem"

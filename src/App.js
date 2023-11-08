@@ -176,15 +176,7 @@ const App = () => {
           <Route path="/" element={<Navigate to="/Items" />} />
           <Route path="/Items" element={<Items />} />
           <Route path="/Items/add" element={<AddItems />} />
-          <Route
-            path="/AddItem"
-            loading={loading}
-            setItemsInfo={onItemsChange}
-            newItems={item}
-            getGroups={groups}
-            createItemsForm={createItemsForm}
-            element={<AddItem />}
-          />
+          <Route path="/AddItem" element={<AddItem />} />
           {/* here there is a problem , we have two different
          component with same routes but it will show us same output */}
           {/* solve problem : here we have same routes but we need different output for EditItems

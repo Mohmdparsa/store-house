@@ -1,16 +1,16 @@
 import Styles from "./AddItem.module.css";
 import Spinner from "../Main component/Spinner";
 import { Link } from "react-router-dom";
-const AddItem = (
-  { loading, setItemsInfo, newItems, createItemsForm },
-  getGroups
-) => {
+import { useContext } from "react";
+import { ItemsContext } from "../Context/ItemsContext";
+const AddItem = () => {
+  const {loading ,  onItemsChange , item ,  createItems , groups} = useContext(ItemsContext)
   return (
     <>
       {loading ? (
         <Spinner />
       ) : (
-        <form onSubmit={createItemsForm}>
+        <form onSubmit={createItems}>
           <div className={Styles.AddItemContainer}>
             <table>
               <tr>
@@ -18,8 +18,8 @@ const AddItem = (
                   type="text"
                   placeholder="name"
                   name="fullname"
-                  value={newItems?.fullname}
-                  onChange={setItemsInfo}
+                  value={item?.fullname}
+                  onChange={onItemsChange}
                   required={true}
                   className={`${Styles.AddItemInputs} , ${Styles.AddItemName}`}
                 />
@@ -29,8 +29,8 @@ const AddItem = (
                   type="text"
                   name="photo"
                   required={true}
-                  value={newItems?.photo}
-                  onChange={setItemsInfo}
+                  value={item?.photo}
+                  onChange={onItemsChange}
                   placeholder="image address"
                   className={`${Styles.AddItemInputs}`}
                 />
@@ -40,8 +40,8 @@ const AddItem = (
                   type="text"
                   placeholder="model"
                   name="model"
-                  value={newItems?.model}
-                  onChange={setItemsInfo}
+                  value={item?.model}
+                  onChange={onItemsChange}
                   required={true}
                   className={`${Styles.AddItemInputs}`}
                 />
@@ -52,8 +52,8 @@ const AddItem = (
                   name="const"
                   placeholder="cost"
                   required={true}
-                  value={newItems?.cost}
-                  onChange={setItemsInfo}
+                  value={item?.cost}
+                  onChange={onItemsChange}
                   className={`${Styles.AddItemInputs} , ${Styles.AddItemCost}`}
                 />
               </tr>
@@ -62,8 +62,8 @@ const AddItem = (
                   name="desc"
                   placeholder="description"
                   required={true}
-                  value={newItems?.desc}
-                  onChange={setItemsInfo}
+                  value={item?.desc}
+                  onChange={onItemsChange}
                   className={Styles.AddItemDesc}
                 ></textarea>
               </tr>
@@ -74,13 +74,13 @@ const AddItem = (
                   name="group"
                   required={true}
                   className={`${Styles.AddItemInputs}`}
-                  value={newItems?.group}
-                  onChange={setItemsInfo}
+                  value={item?.group}
+                  onChange={onItemsChange}
                 >
                   {" "}
                   <option value="group">Choose groups</option>
-                  {getGroups.length > 0 &&
-                    getGroups.map((group) => {
+                  {groups.length > 0 &&
+                  groups.map((group) => {
                       <option key={group.id} value={group.id}>
                         {group.name}
                       </option>;

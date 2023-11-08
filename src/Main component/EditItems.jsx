@@ -1,75 +1,51 @@
 import Styles from "./EditItems.module.css";
 import Spinner from "../Main component/Spinner";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import {
-  getItemsId,
-  getAllGroups,
-  updateItems,
-} from "../Services/ItemsServices";
+import { useState, useEffect, useContext } from "react";
+import { getItemsId, updateItems } from "../Services/ItemsServices";
+import { ItemsContext } from "../Context/ItemsContext";
 const EditItems = () => {
-    {console.log("EditItems Arrow function")}
-  const [state, setState] = useState({
-    loading: false,
-    items: {
-      fullname: "",
-      photo: "",
-      model: "",
-      desc: "",
-      cost: "",
-    },
-    group: [],
-  });
+  const { loading, setLoading, groups } = useContext(ItemsContext);
+  const [item, setItem] = useState({});
   const navigate = useNavigate();
   const { itemsId } = useParams();
-
   useEffect(() => {
-    {console.log("useEffect")}
     const fetchData = async () => {
       try {
-        setState({ ...state, loading: true });
+        setLoading(true);
         const { data: getItems } = await getItemsId(itemsId);
-        const { data: getAllGroupsData } = await getAllGroups(getItems);
-        setState({
-          ...state,
-           loading: false, items: getItems, groups: getAllGroupsData ,
-        });
-        {console.log("get data in useEffect")}
+        setItem(getItems);
+        setLoading(false);
       } catch (error) {
         console.log(error.message);
-        setState({ ...state, loading: false });
-        {console.log("get error of fetchData")}
+        setLoading(false);
       }
     };
     fetchData();
   }, []);
 
-  const setItemsInfo = (event) => {
-    {console.log("setItemsInfoBegining")}
-    setState({
-      ...state,
-      items: {...state.items , [event.target.name]: [event.target.value] },
+  //????????????setState
+  const onItemsChange = (event) => {
+    setItem({
+      item: { ...item, [event.target.name]: [event.target.value] },
     });
-    {console.log("setItemsInfoEnd")}
   };
 
-  const onSubmitBtn = async(event)=>{
-    event.preventDefault()
-    try{
-       setState({...state , loading:true})
-    const data  = await updateItems(state.items , itemsId); 
-    setState({...state , loading:false}) 
-    if(data){
-        navigate("/Items")
-    } 
-    }catch(error){
-        console.log(error.message)
-        setState({...state , loading:false})  
-        
+  const onSubmitBtn = async (event) => {
+    event.preventDefault();
+    try {
+      loading(true);
+      const data = await updateItems(item, itemsId);
+      setLoading(false);
+      if (data) {
+        navigate("/Items");
+      }
+    } catch (error) {
+      console.log(error.message);
+      setLoading(false);
     }
-  }
+  };
 
-  const { loading, items, groups } = state;
   return (
     <>
       {loading ? (
@@ -83,8 +59,8 @@ const EditItems = () => {
                   type="text"
                   placeholder="name"
                   name="fullname"
-                  value={items?.fullname}
-                  onChange={setItemsInfo}
+                  value={item?.fullname}
+                  onChange={onItemsChange}
                   required={true}
                   className={`${Styles.EditItemsInputs} , ${Styles.EditItemsName}`}
                 />
@@ -94,8 +70,8 @@ const EditItems = () => {
                   type="text"
                   name="photo"
                   required={true}
-                  value={items?.photo}
-                  onChange={setItemsInfo}
+                  value={item?.photo}
+                  onChange={onItemsChange}
                   placeholder="image address"
                   className={`${Styles.EditItemsInputs}`}
                 />
@@ -105,8 +81,8 @@ const EditItems = () => {
                   type="text"
                   placeholder="model"
                   name="model"
-                  value={items?.model}
-                  onChange={setItemsInfo}
+                  value={item?.model}
+                  onChange={onItemsChange}
                   required={true}
                   className={`${Styles.EditItemsInputs}`}
                 />
@@ -117,8 +93,8 @@ const EditItems = () => {
                   name="const"
                   placeholder="cost"
                   required={true}
-                  value={items?.cost}
-                  onChange={setItemsInfo}
+                  value={item?.cost}
+                  onChange={onItemsChange}
                   className={`${Styles.EditItemsInputs} , ${Styles.EditItemsCost}`}
                 />
               </tr>
@@ -127,8 +103,8 @@ const EditItems = () => {
                   name="desc"
                   placeholder="description"
                   required={true}
-                  value={items?.desc}
-                  onChange={setItemsInfo}
+                  value={item?.desc}
+                  onChange={onItemsChange}
                   className={Styles.EditItemsDesc}
                 ></textarea>
               </tr>
@@ -139,13 +115,13 @@ const EditItems = () => {
                   name="group"
                   required={true}
                   className={`${Styles.EditItemsInputs}`}
-                  value={items?.groups}
+                  value={item?.groups}
                   onChange=""
                 >
                   {" "}
                   <option value="group">Choose groups</option>
-                  {getAllGroups.length > 0 &&
-                   getAllGroups.map((group) => {
+                  {groups.length > 0 &&
+                    groups.map((group) => {
                       <option key={group.id} value={group.id}>
                         {group.name}
                       </option>;

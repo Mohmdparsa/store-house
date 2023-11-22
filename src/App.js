@@ -16,6 +16,7 @@ import {
 import { Navigate, Routes, Route, useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import { ItemsContext } from "./Context/ItemsContext.js";
+import _ from "lodash"
 const App = () => {
   // @desc ( Items.jsx & ItemsBox.jsx ) for get data with axios from API
   const [items, setItems] = useState([]);
@@ -138,19 +139,17 @@ const App = () => {
 
   //**************************here our code related to searching input in Navbar******************************
 
-  let filterTimeout;
-  const searchingItems = (query) => {
-    clearTimeout(filterTimeout);
+
+  const searchingItems = _.debounce((query) => {
     if (!query) return setFilteredItems([...items]);
-    filterTimeout = setTimeout(() => {
       setFilteredItems(
         items.filter((item) => {
           return item.fullname.toLowerCase().includes(query.toLowerCase());
         })
       );
-    }, 800);
+
     console.log(query);
-  };
+  },800)
 
   return (
     <ItemsContext.Provider

@@ -22,7 +22,6 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [groups, setGroups] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
-  const [itemsQuery, setItemsQuery] = useState({ text: "" });
   const [item, setItem] = useState({});
 
   useEffect(() => {
@@ -139,17 +138,19 @@ const App = () => {
 
   //**************************here our code related to searching input in Navbar******************************
 
-  console.log("searchingItems");
-  const searchingItems = (event) => {
-    setItemsQuery({ ...itemsQuery, text: event.target.value });
-    const filterItems = items.filter((item) => {
-      return item.fullname
-        .toLowerCase()
-        .includes(event.target.value.toLowerCase());
-    });
-    setFilteredItems(filterItems);
+  let filterTimeout;
+  const searchingItems = (query) => {
+    clearTimeout(filterTimeout);
+    if (!query) return setFilteredItems([...items]);
+    filterTimeout = setTimeout(() => {
+      setFilteredItems(
+        items.filter((item) => {
+          return item.fullname.toLowerCase().includes(query.toLowerCase());
+        })
+      );
+    }, 800);
+    console.log(query);
   };
-  console.log("setFilterItems");
 
   return (
     <ItemsContext.Provider
@@ -159,7 +160,6 @@ const App = () => {
         items,
         setItems,
         item,
-        itemsQuery,
         filteredItems,
         groups,
         onItemsChange,

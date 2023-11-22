@@ -7,7 +7,6 @@ export const ItemsContext = createContext({
   setItem: () => {},
   items: {},
   filteredItems: [],
-  itemsQuery: [],
   groups: [],
   onItemsChange: () => {},
   deleteItems: () => {},

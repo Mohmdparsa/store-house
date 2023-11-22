@@ -4,15 +4,16 @@ import Spinner from "./Spinner";
 import { useContext } from "react";
 import { ItemsContext } from "../Context/ItemsContext";
 const Items = () => {
-  const { items, loading, deleteItems } = useContext(ItemsContext);
+  const { loading, deleteItems, filteredItems } =
+    useContext(ItemsContext);
   return (
     <>
       {loading ? (
         <Spinner />
       ) : (
         <section>
-          {items.length > 0 ? (
-            items.map((i) => (
+          {filteredItems.length > 0 ? (
+            filteredItems.map((i) => (
               <ItemsBox
                 key={i.id}
                 ItemsBox={i}

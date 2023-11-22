@@ -2,7 +2,7 @@ import Styles from "./SearchItems.module.css";
 import { useContext } from "react";
 import { ItemsContext } from "../Context/ItemsContext";
 const SearchItems = () => {
-  const {itemsQuery , itemsSearch} = useContext(ItemsContext)
+  const { itemsSearch } = useContext(ItemsContext);
   return (
     <>
       <div className={Styles.searchDiv}>
@@ -11,8 +11,7 @@ const SearchItems = () => {
         </div>
         <input
           type="text"
-          value={itemsQuery.text}
-          onChange={itemsSearch}
+          onChange={(e) => itemsSearch(e.target.value)}
           placeholder="search"
           className={Styles.searchInput}
         />

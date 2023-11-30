@@ -1,6 +1,6 @@
 .AddItemContainer {
   width: 650px;
-  height: 595px;
+  height: 800px;
   background-color: #512b81;
   border-radius: 10px;
   margin-top: 40px;
@@ -12,6 +12,7 @@
   border-radius: 5px;
   margin-top: 10px;
   margin-left: 125px;
+  margin-bottom: 20px;
 }
 .AddItemName {
   margin-top: 50px;
@@ -22,6 +23,7 @@
   height: 100px;
   margin-top: 10px;
   margin-left: 125px;
+  margin-bottom: 20px;
 }
 .AddItemSubmit {
   height: 45px;
@@ -43,4 +45,8 @@
 }
 .AddItemCancelBtn:hover {
   background-color: rgb(255, 80, 49);
+}
+.ErrorMessage{
+  color: red;
+  margin-left: 125px;
 }

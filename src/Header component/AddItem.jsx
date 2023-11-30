@@ -3,90 +3,98 @@ import Spinner from "../Main component/Spinner";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ItemsContext } from "../Context/ItemsContext";
+import { itemSchema } from "../Validations/ItemsValidation";
+import {Field, Formik , Form , ErrorMessage} from "formik"
+
 const AddItem = () => {
-  const {loading ,  onItemsChange , item ,  createItems , groups} = useContext(ItemsContext)
+  const {loading , createItems , groups} = useContext(ItemsContext)
   return (
     <>
       {loading ? (
         <Spinner />
       ) : (
-        <form onSubmit={createItems}>
+        <Formik 
+        initialValues={{
+          fullname : "",
+          photo : "",
+          model: "",
+          desc : "",
+          cost : "",
+          group: ""
+        }}
+        validationSchema={itemSchema}
+        onSubmit={(values)=>{
+          createItems(values)
+        }}
+        >
+        <Form>
           <div className={Styles.AddItemContainer}>
             <table>
               <tr>
-                <input
+                <Field
                   type="text"
                   placeholder="name"
                   name="fullname"
-                  value={item?.fullname}
-                  onChange={onItemsChange}
-                  required={true}
                   className={`${Styles.AddItemInputs} , ${Styles.AddItemName}`}
                 />
               </tr>
+              <ErrorMessage name="fullname" >{msg => <div className={Styles.ErrorMessage}>{msg}</div>}</ErrorMessage>
               <tr>
-                <input
+                <Field
                   type="text"
                   name="photo"
-                  required={true}
-                  value={item?.photo}
-                  onChange={onItemsChange}
                   placeholder="image address"
                   className={`${Styles.AddItemInputs}`}
                 />
               </tr>
+              <ErrorMessage name="photo" >{msg => <div className={Styles.ErrorMessage}>{msg}</div>}</ErrorMessage>
               <tr>
-                <input
+                <Field
                   type="text"
                   placeholder="model"
                   name="model"
-                  value={item?.model}
-                  onChange={onItemsChange}
-                  required={true}
                   className={`${Styles.AddItemInputs}`}
                 />
               </tr>
+              <ErrorMessage name="model" >{msg => <div className={Styles.ErrorMessage}>{msg}</div>}</ErrorMessage>
               <tr>
-                <input
+                <Field
                   type="text"
                   name="const"
                   placeholder="cost"
-                  required={true}
-                  value={item?.cost}
-                  onChange={onItemsChange}
                   className={`${Styles.AddItemInputs} , ${Styles.AddItemCost}`}
                 />
               </tr>
+              <ErrorMessage name="cost" >{msg => <div className={Styles.ErrorMessage}>{msg}</div>}</ErrorMessage>
               <tr>
-                <textarea
+                <Field
                   name="desc"
                   placeholder="description"
-                  required={true}
-                  value={item?.desc}
-                  onChange={onItemsChange}
                   className={Styles.AddItemDesc}
-                ></textarea>
+                />
               </tr>
+              <ErrorMessage name="desc" >{msg => <div className={Styles.ErrorMessage}>{msg}</div>}</ErrorMessage>
 
               <tr>
                 {/*to do: fix the choose group */}
-                <select
+                <Field
                   name="group"
-                  required={true}
-                  className={`${Styles.AddItemInputs}`}
-                  value={item?.group}
-                  onChange={onItemsChange}
+                  as="select"
+                  className={`${Styles.AddItemInputs}`} 
                 >
                   {" "}
                   <option value="group">Choose groups</option>
                   {groups.length > 0 &&
                   groups.map((group) => {
+                    <select>
                       <option key={group.id} value={group.id}>
                         {group.name}
                       </option>;
+                      </select>
                     })}
-                </select>
+                </Field>
               </tr>
+              <ErrorMessage name="group">{msg =><div className={Styles.ErrorMessage}>{msg}</div>}</ErrorMessage>
               <tr>
                 <input
                   type="submit"
@@ -99,7 +107,8 @@ const AddItem = () => {
               </tr>
             </table>
           </div>
-        </form>
+        </Form>
+        </Formik>
       )}
     </>
   );

@@ -6,7 +6,7 @@ import {
   ViewItems,
   EditItems,
 } from "./index.jsx";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import {
   getAllItems,
   getAllGroups,
@@ -16,14 +16,14 @@ import {
 import { Navigate, Routes, Route, useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import { ItemsContext } from "./Context/ItemsContext.js";
-import _ from "lodash"
+import _ from "lodash";
+import { useImmer } from "use-immer";
 const App = () => {
   // @desc ( Items.jsx & ItemsBox.jsx ) for get data with axios from API
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [groups, setGroups] = useState([]);
-  const [filteredItems, setFilteredItems] = useState([]);
-  const [item, setItem] = useState({});
+  const [items, setItems] = useImmer([]);
+  const [loading, setLoading] = useImmer(false);
+  const [groups, setGroups] = useImmer([]);
+  const [filteredItems, setFilteredItems] = useImmer([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,21 +45,20 @@ const App = () => {
 
   //**********************@desc for make new items in AddItem.jsx*************************
 
-  const onItemsChange = (event) => {
-    setItem({ ...item, [event.target.name]: event.target.value });
-  };
-
   const navigate = useNavigate();
-  const createItemsForm = async (event) => {
-    event.preventDefault();
-    try {
-      const { status } = await createItems(items);
-      if (status === 201) {
-        setItems({});
-        navigate("/items");
-      }
-    } catch (error) {
-      console.log(error.message);
+  const createItemsForm = async (values) => {
+    setLoading((draft) => !draft);
+
+    const { status, data } = await createItems(values);
+    if (status === 201) {
+      setItems({});
+      navigate("/items");
+      setItems((draft) => {
+        draft.push(data);
+      });
+      setFilteredItems((draft) => {
+        draft.push(data);
+      });
     }
   };
 
@@ -122,34 +121,37 @@ const App = () => {
   };
 
   const removeItems = async (ItemsId) => {
+    const itemsBackUp = [...items];
     try {
-      setLoading(true);
+      setLoading((draft) => !draft);
       const response = await deleteItems(ItemsId);
       if (response) {
         // here after we delete specific item we want other items show except that one so:
-        const { data: getItemsData } = await getAllItems();
-        setItems(getItemsData);
+        setItems((draft) => {
+          draft.filter((c) => c.id !== ItemsId);
+        });
+        setFilteredItems((draft) => {
+          draft.filter((c) => c.id !== ItemsId);
+        });
         setLoading(false);
       }
     } catch (err) {
       console.log(err.message);
-      setLoading(false);
+      setLoading((draft) => !draft);
     }
   };
 
   //**************************here our code related to searching input in Navbar******************************
 
-
   const searchingItems = _.debounce((query) => {
     if (!query) return setFilteredItems([...items]);
-      setFilteredItems(
-        items.filter((item) => {
-          return item.fullname.toLowerCase().includes(query.toLowerCase());
-        })
-      );
-
+    setFilteredItems((draft) =>
+      draft.filter((item) =>
+        item.fullname.toLowerCase().includes(query.toLowerCase())
+      )
+    );
     console.log(query);
-  },800)
+  }, 800);
 
   return (
     <ItemsContext.Provider
@@ -158,10 +160,8 @@ const App = () => {
         setLoading,
         items,
         setItems,
-        item,
         filteredItems,
         groups,
-        onItemsChange,
         deleteItems: confirmDelete,
         createItems: createItemsForm,
         itemsSearch: searchingItems,
